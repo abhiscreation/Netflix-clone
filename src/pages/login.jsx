@@ -24,9 +24,8 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="overlay" />
-      https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg
       <form onSubmit={handleLogin}>
-        <h2>Sign In</h2>
+        <h2 style={{textAlign:"center",color:"#f1f1f1"}}>Sign In</h2>
         <input
           type="email"
           placeholder="Email"

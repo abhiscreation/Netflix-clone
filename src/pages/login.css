@@ -1,5 +1,7 @@
 .login-container {
-  background-image: ("../public/logo192.png");
+  background: url("../../public/BG_Img.jpg");
+  background-size: cover;
+  background-position: center;
   position: relative;
   min-height: 100vh;
   display: flex;
