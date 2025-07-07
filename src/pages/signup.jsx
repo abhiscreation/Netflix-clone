@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import './signup.css';
+import GlobalImage from "../components/GlobalImage";
 
 
 const Signup = () => {
@@ -22,9 +23,13 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
-      <h2>Sign Up</h2>
+    <GlobalImage
+      src="/BG_Img.jpg"
+      asBackground
+    >
+    <div className="signup-container">   
       <form onSubmit={handleSignup}>
+        <h2>Sign Up</h2>
         <input
           type="email"
           placeholder="Email"
@@ -43,6 +48,7 @@ const Signup = () => {
         {error && <p className="error">{error}</p>}
       </form>
     </div>
+      </GlobalImage>
   );
 };
 

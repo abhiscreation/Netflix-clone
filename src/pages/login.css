@@ -1,17 +1,9 @@
 .login-container {
-  background: url("../../public/BG_Img.jpg");
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
-}
-
-.overlay {
   position: absolute;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   top: 0;
   left: 0;
   height: 100%;
