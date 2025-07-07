@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import GlobalImage from "../components/GlobalImage";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,28 +23,32 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="overlay" />
-      <form onSubmit={handleLogin}>
-        <h2 style={{textAlign:"center",color:"#f1f1f1"}}>Sign In</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Sign In</button>
-        {error && <p className="error">{error}</p>}
-      </form>
-    </div>
+     <GlobalImage
+          src="/BG_Img.jpg"
+          asBackground
+        >
+        <div className="login-container">
+          <form onSubmit={handleLogin}>
+            <h2 style={{textAlign:"center",color:"#f1f1f1"}}>Sign In</h2>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Sign In</button>
+            {error && <p className="error">{error}</p>}
+          </form>
+      </div>
+    </GlobalImage>
   );
 };
 
