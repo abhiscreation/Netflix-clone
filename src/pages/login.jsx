@@ -18,7 +18,13 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/home");
     } catch (err) {
-      setError("Invalid email or password");
+      if (err.code === 'auth/user-not-found') {
+        setError("No account found with this email. Please sign up first.");
+      } else if (err.code === 'auth/wrong-password') {
+        setError("Incorrect password. Please try again.");
+      } else {
+        setError("Invalid email or password");
+      }
     }
   };
 
@@ -46,6 +52,10 @@ const Login = () => {
             />
             <button type="submit">Sign In</button>
             {error && <p className="error">{error}</p>}
+            <p style={{textAlign: "center", color: "#f1f1f1"}}>
+              New to Netflix ?&nbsp;&nbsp;{' '}
+              <a href="/signup" style={{color: "#e50914", textDecoration: "underline"}}>Sign up now</a>
+            </p>
           </form>
       </div>
     </GlobalImage>
