@@ -3,10 +3,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyCpJdZAxKp07AT2sPoC2TZFyZMUnj4Q6Mk",
+  authDomain: "netflix-clone-ff29e.firebaseapp.com",
+  projectId: "netflix-clone-ff29e",
+  storageBucket: "netflix-clone-ff29e.appspot.com",
+  messagingSenderId: "586185080585",
+  appId: "1:586185080585:web:b7c572b85d378d1f499dd8"
 };
 
 const app = initializeApp(firebaseConfig);
