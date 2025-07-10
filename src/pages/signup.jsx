@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import './signup.css';
-import GlobalImage from "../components/GlobalImage";
+import GlobalVideo from "../components/GlobalVideo";
 
 
 const Signup = () => {
@@ -16,39 +16,40 @@ const Signup = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/home");
+      navigate("/login");
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <GlobalImage
-      src="/BG_Img.jpg"
-      asBackground
-    >
-    <div className="signup-container">   
+    <GlobalVideo src="https://www.w3schools.com/howto/rain.mp4">
+      <div className="signup-container">   
       <form onSubmit={handleSignup}>
-        <h2>Sign Up</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password (min 6 chars)"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Sign Up</button>
-        {error && <p className="error">{error}</p>}
-      </form>
-    </div>
-      </GlobalImage>
+        <img src="/Netflix_logo.png" alt="Netflix Logo" style={{ display: 'block', margin: '0 auto 1rem', width: '180px', maxWidth: '80vw' }} />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password (min 6 chars)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Sign Up</button>
+          {error && <p className="error">{error}</p>}
+          <p style={{textAlign: "center", color: "#f1f1f1", marginTop: "1rem"}}>
+            Already a member?{' '}
+            <a href="/login" style={{color: "#e50914", textDecoration: "underline"}}>Sign in</a>
+          </p>
+        </form>
+      </div>
+    </GlobalVideo>
   );
 };
 
