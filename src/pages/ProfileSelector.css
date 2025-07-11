@@ -1,0 +1,107 @@
+.profile-selector-bg {
+  min-height: 100vh;
+  background: #141414;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-selector-container {
+  background: rgba(0,0,0,0.85);
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px #000;
+  text-align: center;
+}
+
+.profile-list {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #222;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 140px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.profile-card:hover {
+  transform: scale(1.05);
+  background: #333;
+}
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  border: 2px solid #e50914;
+}
+.profile-name {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.add-profile {
+  background: #181818;
+  color: #e50914;
+  font-size: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.add-avatar {
+  font-size: 3rem;
+  color: #e50914;
+  margin-bottom: 0.5rem;
+}
+.delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #e50914;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.add-profile-modal {
+  background: #222;
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 16px #000;
+  z-index: 10;
+  min-width: 250px;
+}
+.add-profile-modal input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: none;
+}
+.add-profile-modal button {
+  margin: 0 0.5rem;
+  background: #e50914;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

@@ -14,11 +14,16 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/login");
+      navigate("/ProfileSelector");
     } catch (err) {
-      setError(err.message);
+      if (err.code === "auth/email-already-in-use") {
+        setError("This email is already registered. Please sign in or use a different email.");
+      } else {
+        setError(err.message);
+      }
     }
   };
 
