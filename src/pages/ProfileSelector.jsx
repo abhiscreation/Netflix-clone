@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GlobalImage from "../components/GlobalImage";
 import "./ProfileSelector.css";
+import { supabase } from "../supabase";
 
 const DEFAULT_PROFILES = [
   {
@@ -60,10 +61,16 @@ const ProfileSelector = () => {
     setProfiles(profiles.filter((p) => p.id !== id));
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/login");
+  };
+
   return (
     <div className="profile-selector-bg">
       <div className="profile-selector-container">
         <h2>Who's watching?</h2>
+        <button onClick={handleLogout} style={{ position: 'absolute', top: 20, right: 20, background: '#e50914', color: '#fff', border: 'none', borderRadius: 4, padding: '0.5rem 1.2rem', fontWeight: 'bold', cursor: 'pointer', zIndex: 2 }}>Logout</button>
         <div className="profile-list">
           {profiles.map((profile) => (
             <div key={profile.id} className="profile-card">
