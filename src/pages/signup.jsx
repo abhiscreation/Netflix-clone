@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import './signup.css';
 import GlobalVideo from "../components/GlobalVideo";
-
+import { supabase } from "../supabase";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -15,15 +13,25 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/ProfileSelector");
-    } catch (err) {
-      if (err.code === "auth/email-already-in-use") {
-        setError("This email is already registered. Please sign in or use a different email.");
-      } else {
-        setError(err.message);
+    // First, try to sign in with the provided email and password
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    if (!signInError) {
+      setError("This email is already registered. Please sign in.");
+      return;
+    } else if (signInError.message.toLowerCase().includes("invalid login credentials")) {
+      // Email exists but password is wrong
+      setError("This email is already registered. Please sign in.");
+      return;
+    } else if (signInError.message.toLowerCase().includes("user not found")) {
+      // User does not exist, proceed to sign up
+      const { error: signUpError } = await supabase.auth.signUp({ email, password });
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
       }
+      navigate("/ProfileSelector");
+    } else {
+      setError(signInError.message);
     }
   };
 

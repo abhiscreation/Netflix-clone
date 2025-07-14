@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import GlobalImage from "../components/GlobalImage";
+import { supabase } from "../supabase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,16 +28,18 @@ const Login = () => {
       localStorage.removeItem("netflix_remembered_email");
     }
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInError) {
+        if (signInError.message.toLowerCase().includes("invalid login credentials")) {
+          setError("Invalid email or password");
+        } else {
+          setError(signInError.message);
+        }
+        return;
+      }
       navigate("/ProfileSelector");
     } catch (err) {
-      if (err.code === 'auth/user-not-found') {
-        setError("No account found with this email. Please sign up first.");
-      } else if (err.code === 'auth/wrong-password') {
-        setError("Incorrect password. Please try again.");
-      } else {
-        setError("Invalid email or password");
-      }
+      setError("An unexpected error occurred. Please try again.");
     }
   };
 

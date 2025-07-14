@@ -8,6 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 import { AuthProvider } from "./context/Authcontext";
 import ProfileSelector from "./pages/ProfileSelector";
+import EmailConfirmed from "./pages/EmailConfirmed";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path="/childrenhome" element={<PrivateRoute><ChildrenHome/></PrivateRoute>} />
           <Route path="/ProfileSelector" element={<PrivateRoute><ProfileSelector/></PrivateRoute>} />
           <Route path="/signup" element={<Signup />} />
-          
+          <Route path="/email-confirmed" element={<EmailConfirmed />} />
         </Routes>
       </Router>
     </AuthProvider>
