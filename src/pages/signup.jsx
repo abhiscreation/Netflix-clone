@@ -13,26 +13,18 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
-    // First, try to sign in with the provided email and password
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-    if (!signInError) {
-      setError("This email is already registered. Please sign in.");
-      return;
-    } else if (signInError.message.toLowerCase().includes("invalid login credentials")) {
-      // Email exists but password is wrong
-      setError("This email is already registered. Please sign in.");
-      return;
-    } else if (signInError.message.toLowerCase().includes("user not found")) {
-      // User does not exist, proceed to sign up
-      const { error: signUpError } = await supabase.auth.signUp({ email, password });
-      if (signUpError) {
+    // Try to sign up directly
+    const { error: signUpError } = await supabase.auth.signUp({ email, password });
+    if (signUpError) {
+      if (signUpError.message.toLowerCase().includes("already registered") || signUpError.message.toLowerCase().includes("user already exists")) {
+        setError("This email is already registered. Please sign in.");
+      } else {
         setError(signUpError.message);
-        return;
       }
-      navigate("/ProfileSelector");
-    } else {
-      setError(signInError.message);
+      return;
     }
+    // Optionally, you may want to check for email confirmation here
+    navigate("/ProfileSelector");
   };
 
   return (
