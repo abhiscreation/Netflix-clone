@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@supabase/supabase-js": "^2.50.5",
+    "@supabase/supabase-js": "^2.51.0",
     "cg-dcx-chart-dashboard": "^0.0.1",
     "cra-template": "1.2.0",
     "react": "^19.0.0",
