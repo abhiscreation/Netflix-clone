@@ -24,14 +24,14 @@ const Signup = () => {
       return;
     }
     // Optionally, you may want to check for email confirmation here
-    navigate("/ProfileSelector");
+    navigate("/email-confirmed");
   };
 
   return (
-    <GlobalVideo src="https://www.w3schools.com/howto/rain.mp4">
+    <GlobalVideo src="/signup_bg.mp4" playbackRate={0.8}>
       <div className="signup-container">   
       <form onSubmit={handleSignup}>
-        <img src="/Netflix_logo.png" alt="Netflix Logo" style={{ display: 'block', margin: '0 auto 1rem', width: '180px', maxWidth: '80vw' }} />
+        <img src="/Netflix_logo.png" alt="Netflix Logo" style={{ display: 'block', margin: '0 auto 2rem', width: '180px', maxWidth: '80vw' }} />
           <input
             type="email"
             placeholder="Email"

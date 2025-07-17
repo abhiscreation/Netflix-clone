@@ -105,3 +105,41 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
+
+.profile-animate {
+  animation: profile-pop 0.5s cubic-bezier(0.23, 1.02, 0.35, 1) 0s 1 both, profile-shine 1.1s cubic-bezier(0.23, 1.02, 0.35, 1) 0s 1 both;
+}
+
+@keyframes profile-pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes profile-shine {
+  0% {
+    box-shadow: 0 0 0 0 #e50914, 0 0 0 0 #fff;
+    border-color: #e50914;
+  }
+  40% {
+    box-shadow: 0 0 16px 6px #e50914, 0 0 0 0 #fff;
+    border-color: #fff;
+  }
+  60% {
+    box-shadow: 0 0 24px 10px #fff, 0 0 0 0 #e50914;
+    border-color: #e50914;
+  }
+  100% {
+    box-shadow: 0 0 0 0 #e50914, 0 0 0 0 #fff;
+    border-color: #e50914;
+  }
+}

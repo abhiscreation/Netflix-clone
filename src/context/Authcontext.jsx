@@ -9,6 +9,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Listen for auth state changes with Supabase
@@ -16,13 +17,16 @@ export function AuthProvider({ children }) {
       setCurrentUser(session?.user || null);
     });
     // Set initial user
-    supabase.auth.getUser().then(({ data: { user } }) => setCurrentUser(user));
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
     return () => {
       listener.subscription.unsubscribe();
     };
   }, []);
 
-  const value = { currentUser, setCurrentUser };
+  const value = { currentUser, setCurrentUser, loading };
 
   return (
     <AuthContext.Provider value={value}>

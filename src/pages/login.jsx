@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import GlobalImage from "../components/GlobalImage";
 import { supabase } from "../supabase";
+import LoadingBar from "../components/LoadingBar";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,11 +18,13 @@ const Login = () => {
   }, []);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     if (rememberMe) {
       localStorage.setItem("netflix_remembered_email", email);
     } else {
@@ -35,11 +38,16 @@ const Login = () => {
         } else {
           setError(signInError.message);
         }
+        setLoading(false);
         return;
       }
-      navigate("/ProfileSelector");
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/ProfileSelector");
+      }, 900); // matches loading bar duration
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -48,6 +56,7 @@ const Login = () => {
           src="/BG_Img.jpg"
           asBackground
         >
+        {loading && <LoadingBar />}
         <div className="login-container">
           <form onSubmit={handleLogin}>
             <img src="/Logonetflix.png" alt="Netflix Logo" style={{ display: 'block', margin: '0 auto 1.5rem', width: '180px', maxWidth: '80vw' }} />

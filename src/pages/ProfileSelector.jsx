@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GlobalImage from "../components/GlobalImage";
 import "./ProfileSelector.css";
 import { supabase } from "../supabase";
+import LoadingBar from "../components/LoadingBar";
 
 const DEFAULT_PROFILES = [
   {
@@ -28,19 +29,29 @@ const ProfileSelector = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [newName, setNewName] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("/Netflix_logo.png");
+  const [loading, setLoading] = useState(false);
+  const [animateProfiles, setAnimateProfiles] = useState(false); // NEW
   const navigate = useNavigate();
 
   useEffect(() => {
     saveProfiles(profiles);
   }, [profiles]);
 
+  useEffect(() => {
+    // Trigger animation on mount
+    setAnimateProfiles(true);
+  }, []);
+
   const handleSelect = (profile) => {
-    localStorage.setItem("netflix_selected_profile", JSON.stringify(profile));
-    if (profile.isChildren) {
-      navigate("/childrenhome");
-    } else {
-      navigate("/home");
-    }
+    setLoading(true);
+    setTimeout(() => {
+      localStorage.setItem("netflix_selected_profile", JSON.stringify(profile));
+      if (profile.isChildren) {
+        navigate("/childrenhome");
+      } else {
+        navigate("/home");
+      }
+    }, 900); // matches loading bar duration
   };
 
   const handleAddProfile = () => {
@@ -68,12 +79,13 @@ const ProfileSelector = () => {
 
   return (
     <div className="profile-selector-bg">
+      {loading && <LoadingBar />}
       <div className="profile-selector-container">
         <h2>Who's watching?</h2>
         <button onClick={handleLogout} style={{ position: 'absolute', top: 20, right: 20, background: '#e50914', color: '#fff', border: 'none', borderRadius: 4, padding: '0.5rem 1.2rem', fontWeight: 'bold', cursor: 'pointer', zIndex: 2 }}>Logout</button>
         <div className="profile-list">
           {profiles.map((profile) => (
-            <div key={profile.id} className="profile-card">
+            <div key={profile.id} className={`profile-card${animateProfiles ? ' profile-animate' : ''}`} onClick={() => handleSelect(profile)}>
               <GlobalImage
                 src={profile.avatar}
                 alt={profile.name}
@@ -81,7 +93,6 @@ const ProfileSelector = () => {
                 height={100}
                 className="profile-avatar"
                 style={{ borderRadius: "8px" }}
-                onClick={() => handleSelect(profile)}
               />
               <div className="profile-name">{profile.name}</div>
               {!profile.isChildren && (
