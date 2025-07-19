@@ -81,7 +81,7 @@ const ProfileSelector = () => {
     <div className="profile-selector-bg">
       {loading && <LoadingBar />}
       <div className="profile-selector-container">
-        <h2>Who's watching?</h2>
+        <h2 style={{ color: 'white' }}> Who's watching ? </h2>
         <button onClick={handleLogout} style={{ position: 'absolute', top: 20, right: 20, background: '#e50914', color: '#fff', border: 'none', borderRadius: 4, padding: '0.5rem 1.2rem', fontWeight: 'bold', cursor: 'pointer', zIndex: 2 }}>Logout</button>
         <div className="profile-list">
           {profiles.map((profile) => (
