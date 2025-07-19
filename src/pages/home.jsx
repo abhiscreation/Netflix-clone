@@ -11,6 +11,7 @@ const Home = () => {
       <Navbar />
       <div style={{ paddingTop: 80, textAlign: 'center', fontSize: '2rem' }}>
         Welcome to the Home Page!
+        Browse for movies, TV shows, and more.
       </div>
     </div>
   );
