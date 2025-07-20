@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css';
+import './Header.css';
 
-const Navbar = () => {
+const Navbar = ({ onSectionClick }) => {
   const handleLogoClick = () => {
     window.location.href = '/';
   };
 
   return (
     <div className="netflix-header">
-      
       <div className="navbar-left">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
@@ -20,12 +19,12 @@ const Navbar = () => {
           onKeyDown={(e) => e.key === "Enter" && handleLogoClick()}
         />
         <ul className="primary-navigation">
-          <li><a href="#" className="nav-link">Home</a></li>
-          <li><a href="#" className="nav-link">TV Shows</a></li>
-          <li><a href="#" className="nav-link active">Movies</a></li>
-          <li><a href="#" className="nav-link">New & Popular</a></li>
-          <li><a href="#" className="nav-link">My List</a></li>
-          <li><a href="#" className="nav-link">Browse by Languages</a></li>
+          <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("home")}>Home</a></li>
+          <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("tvshows")}>TV Shows</a></li>
+          <li><a href="#" className="nav-link active" onClick={() => onSectionClick && onSectionClick("movies")}>Movies</a></li>
+          <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("newpopular")}>New & Popular</a></li>
+          <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("mylist")}>My List</a></li>
+          <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("languages")}>Browse by Languages</a></li>
         </ul>
       </div>
       

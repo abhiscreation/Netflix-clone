@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Headerr";
 
 const Home = () => {
   const navigate = useNavigate();
