@@ -1,48 +1,55 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './MovieRow.css';
 
 const MovieRow = ({ title, genreLink, movies }) => {
   const sliderRef = useRef(null);
-  const paginationRef = useRef(null);
-  
-  // Handle navigation
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(movies.length / itemsPerPage);
+
+  // Scroll by 6 items
   const scrollSlider = (direction) => {
     if (!sliderRef.current) return;
-    
-    const container = sliderRef.current;
-    const scrollAmount = container.clientWidth * 0.8;
-    
+    const item = sliderRef.current.querySelector('.slider-item');
+    if (!item) return;
+    const scrollAmount = item.clientWidth * itemsPerPage;
+
+    // Fix: If movies.length is a multiple of itemsPerPage, subtract 1 set
+    const lastSet = Math.max(movies.length - itemsPerPage, 0);
+    const maxScroll = item.clientWidth * lastSet;
+
+    let targetScroll;
     if (direction === 'left') {
-      container.scrollLeft -= scrollAmount;
+      targetScroll = Math.max(
+        sliderRef.current.scrollLeft - scrollAmount,
+        0
+      );
     } else {
-      container.scrollLeft += scrollAmount;
+      targetScroll = Math.min(
+        sliderRef.current.scrollLeft + scrollAmount,
+        maxScroll
+      );
     }
-    
-    updatePagination();
-  };
-  
-  // Update pagination indicators
-  const updatePagination = () => {
-    if (!sliderRef.current || !paginationRef.current) return;
-    
-    const container = sliderRef.current;
-    const items = container.querySelectorAll('.slider-item');
-    const indicators = paginationRef.current.querySelectorAll('li');
-    const scrollPos = container.scrollLeft;
-    const itemWidth = items[0]?.clientWidth || 0;
-    
-    if (itemWidth === 0) return;
-    
-    const activeIndex = Math.floor(scrollPos / itemWidth);
-    
-    indicators.forEach((indicator, index) => {
-      indicator.classList.toggle('active', index === activeIndex);
+
+    sliderRef.current.scrollTo({
+      left: targetScroll,
+      behavior: 'smooth'
     });
   };
-  
+
+  // Update indicator on manual scroll (touch/drag)
+  const handleScroll = () => {
+    if (!sliderRef.current) return;
+    const item = sliderRef.current.querySelector('.slider-item');
+    if (!item) return;
+    const scrollLeft = sliderRef.current.scrollLeft;
+    const page = Math.floor(scrollLeft / (item.clientWidth * itemsPerPage));
+    setCurrentPage(page >= totalPages - 1 ? totalPages - 1 : page);
+  };
+
   return (
     <div className="lolomoRow lolomoRow_title_card" data-list-context="genre">
-      {/* Row Header */}
       <h2 className="rowHeader">
         <a href={genreLink} className="rowTitle">
           <div className="row-header-title">{title}</div>
@@ -51,47 +58,48 @@ const MovieRow = ({ title, genreLink, movies }) => {
             <div className="aro-row-chevron icon-akiraCaretRight"></div>
           </div>
         </a>
+        <ul className="pagination-indicator header-indicator">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <li key={idx} className={idx === currentPage ? "active" : ""}></li>
+          ))}
+        </ul>
       </h2>
-      
-      {/* Carousel Container */}
       <div className="rowContainer rowContainer_title_card">
         <div className="ptrack-container">
           <div className="rowContent slider-hover-trigger-layer">
             <div className="slider">
-              {/* Pagination Indicators removed */}
-              {/* Navigation Arrow - Left */}
-              <span 
-                className="handle handlePrev active" 
-                tabIndex="0" 
-                role="button" 
+              {/* Left Arrow */}
+              <span
+                className="handle handlePrev active"
+                tabIndex="0"
+                role="button"
                 aria-label="See previous titles"
                 onClick={() => scrollSlider('left')}
               >
                 <b className="indicator-icon icon-leftCaret">&#8249;</b>
               </span>
-              {/* Slider Content */}
+              {/* Carousel */}
               <div className="sliderMask showPeek">
-                <div 
-                  className="sliderContent row-with-x-columns" 
+                <div
+                  className="sliderContent row-with-x-columns"
                   ref={sliderRef}
-                  onScroll={updatePagination}
+                  onScroll={handleScroll}
                 >
-                  {/* Movie Cards */}
                   {movies.map((movie, index) => (
                     <div key={index} className={`slider-item slider-item-${index}`}>
                       <div className="title-card-container" data-uia="title-card-container">
                         <div className="title-card">
                           <div className="ptrack-content">
-                            <a 
-                              href={movie.link} 
-                              role="link" 
+                            <a
+                              href={movie.link}
+                              role="link"
                               aria-label={movie.title}
                               className="slider-refocus"
                             >
                               <div className="boxart-container boxart-rounded boxart-size-16x9">
-                                <img 
-                                  className="boxart-image boxart-image-in-padded-container" 
-                                  src={movie.image} 
+                                <img
+                                  className="boxart-image boxart-image-in-padded-container"
+                                  src={movie.image}
                                   alt={movie.title}
                                 />
                                 <div className="fallback-text-container" aria-hidden="true">
@@ -105,45 +113,16 @@ const MovieRow = ({ title, genreLink, movies }) => {
                       </div>
                     </div>
                   ))}
-                  
-                  {/* Loading Placeholders */}
-                  {[...Array(5)].map((_, i) => (
-                    <div key={`loading-${i}`} className="slider-item">
-                      <div className="title-card-container" data-uia="title-card-container">
-                        <div className="title-card">
-                          <div className="ptrack-content">
-                            <a 
-                              href="#" 
-                              role="link" 
-                              aria-label="Loading..."
-                              className="slider-refocus"
-                            >
-                              <div className="boxart-container boxart-rounded boxart-size-16x9">
-                                <img 
-                                  className="boxart-image boxart-image-in-padded-container" 
-                                  src="https://occ-0-7338-2186.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABfiPuL9HSzLZySLxpC7VaHGhopGA_4FvruCkrW70WPI5jOy8xXQPNKbRi7YtEQwjw5syqzHl9Xa02B5r4ryeUPukz_zv9VJG5Y_WjkU1sHcfr0J_1yZyhEKkeLfBuzzVBP4Y.jpg?r=869"
-                                  alt="Loading..."
-                                />
-                                <div className="fallback-text-container" aria-hidden="true">
-                                  <p className="fallback-text">Loading...</p>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div className="bob-container"></div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
-              {/* Navigation Arrow - Right */}
-              <span 
-                className="handle handleNext active" 
-                tabIndex="0" 
-                role="button" 
+              {/* Right Arrow */}
+              <span
+                className="handle handleNext active"
+                tabIndex="0"
+                role="button"
                 aria-label="See more titles"
                 onClick={() => scrollSlider('right')}
+                style={{ pointerEvents: 'auto', opacity: 1 }}
               >
                 <b className="indicator-icon icon-rightCaret">&#8250;</b>
               </span>
@@ -198,4 +177,4 @@ MovieRow.defaultProps = {
   ]
 };
 
-export default MovieRow; 
+export default MovieRow;

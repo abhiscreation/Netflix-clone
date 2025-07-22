@@ -5,11 +5,16 @@
   z-index: 1;
 }
 
+.first-row{
+  margin-top: 60px;
+}
+
 .rowHeader {
-  margin: 0 4% 0.5em;
-  position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Add this */
+  margin: 0 4% 0.5em;
+  position: relative;
   font-size: 1.4vw;
   font-weight: 500;
   color: #e5e5e5;
@@ -60,7 +65,8 @@
   position: relative;
   height: 100%;
   margin: 0;
-  padding: 0 4%;
+  padding-left: 4%;
+  padding-right: 0; /* Remove right padding */
   overflow: visible;
   z-index: 3;
 }
@@ -76,35 +82,34 @@
 }
 
 .pagination-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
+  align-items: center;
+  margin-left: auto; /* Push to right */
   list-style: none;
   padding: 0;
-  margin: 0 0 10px;
-  z-index: 10;
+  height: 100%;
 }
 
 .pagination-indicator li {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-  margin: 0 3px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  width: 14px;           /* Smaller line length */
+  height: 3px;           /* Thinner line */
+  border-radius: 2px;
+  background: #888;
+  margin: 0 2px;
+  opacity: 0.35;         /* Less highlight */
+  transition: background 0.2s, opacity 0.2s;
 }
 
 .pagination-indicator li.active {
-  background-color: rgba(255, 255, 255, 0.8);
+  background: #fff;
+  opacity: 0.8;          /* Slightly less than full highlight */
 }
 
 .sliderMask {
   overflow: hidden;
   position: relative;
   height: 100%;
+  padding-right: 0; /* Remove right padding */
 }
 
 .sliderContent {
@@ -112,12 +117,12 @@
   transition: transform 0.5s ease;
   padding-bottom: 20px;
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .sliderContent::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 .slider-item {
@@ -310,4 +315,4 @@
     width: 50%; /* 2 items per row */
     min-width: 130px;
   }
-} 
+}
