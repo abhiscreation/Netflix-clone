@@ -60,7 +60,7 @@ const Login = () => {
         <div className="login-container">
           <form onSubmit={handleLogin}>
             <img src="/Logonetflix.png" alt="Netflix Logo" style={{ display: 'block', margin: '0 auto 1.5rem', width: '180px', maxWidth: '80vw' }} />
-            <h2 style={{textAlign:"center",color:"#f1f1f1"}}>Sign In</h2>
+            <h2 style={{textAlign:"center",color:"#f1f1f1", marginTop: "-1.2rem", marginBottom: "1.2rem"}}>Sign In</h2>
             <input
               type="email"
               placeholder="Email"
