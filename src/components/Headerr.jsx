@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Navbar = ({ onSectionClick }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotificationMenu, setShowNotificationMenu] = useState(false);
+  const notificationTimeoutRef = useRef(null);
+  const profileTimeoutRef = useRef(null);
 
-  const handleMouseEnter = () => {
-    setShowNotificationMenu(false); // Close notification dropdown
-    setShowProfileMenu(true);
-  };
-  const handleMouseLeave = () => {
-    setShowProfileMenu(false);
-  };
-
+  // Notification Dropdown Handlers
   const handleNotificationEnter = () => {
-    setShowProfileMenu(false); // Close profile dropdown
+    if (notificationTimeoutRef.current) {
+      clearTimeout(notificationTimeoutRef.current);
+      notificationTimeoutRef.current = null;
+    }
+    setShowProfileMenu(false);
     setShowNotificationMenu(true);
   };
+
   const handleNotificationLeave = () => {
+    notificationTimeoutRef.current = setTimeout(() => {
+      setShowNotificationMenu(false);
+    }, 180); // Slightly reduced timeout
+  };
+
+  // Profile Dropdown Handlers
+  const handleProfileEnter = () => {
+    if (profileTimeoutRef.current) {
+      clearTimeout(profileTimeoutRef.current);
+      profileTimeoutRef.current = null;
+    }
     setShowNotificationMenu(false);
+    setShowProfileMenu(true);
+  };
+
+  const handleProfileLeave = () => {
+    profileTimeoutRef.current = setTimeout(() => {
+      setShowProfileMenu(false);
+    }, 180); // Slightly reduced timeout
   };
 
   const handleLogoClick = () => {
@@ -82,7 +100,6 @@ const Navbar = ({ onSectionClick }) => {
           {showNotificationMenu && (
             <div className="notification-drop-down sub-menu theme-lakira" role="menu" tabIndex="0">
               <div className="ptrack-content">
-                <div className="topbar"></div>
                 <ul className="sub-menu-list notifications" role="list" aria-label="Notifications">
                   <li className="sub-menu-item notification">
                     <div className="notification-item">
@@ -108,8 +125,8 @@ const Navbar = ({ onSectionClick }) => {
         {/* Profile Dropdown */}
         <div
           className="nav-element account-menu-item"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={handleProfileEnter}
+          onMouseLeave={handleProfileLeave}
         >
           <div className="account-dropdown-button">
             <div className="avatar-wrapper">
@@ -130,7 +147,6 @@ const Navbar = ({ onSectionClick }) => {
               data-uia="account-dropdown-menu"
             >
               <div className="ptrack-content">
-                <div className="topbar"></div>
                 <ul className="sub-menu-list profiles" role="list" aria-label="Profiles">
                   <li className="sub-menu-item profile">
                     <div>

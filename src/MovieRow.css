@@ -316,3 +316,13 @@
     min-width: 130px;
   }
 }
+
+/* Example selectors, adjust as needed for your actual button classes/IDs */
+.notification-btn:hover,
+.profile-btn:hover {
+  border: none;
+  border-bottom: none;
+  text-decoration: none;
+  box-shadow: none;
+  outline: none;
+}
