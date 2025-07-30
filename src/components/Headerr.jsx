@@ -70,7 +70,6 @@ const Navbar = ({ onSectionClick }) => {
           <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("languages")}>Browse by Languages</a></li>
         </ul>
       </div>
-      here
       
       {/* Right side navigation */}
       <div className="secondary-navigation">
