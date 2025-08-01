@@ -53,14 +53,13 @@ const Navbar = ({ onSectionClick }) => {
   return (
     <div className="netflix-header">
       <div className="navbar-left">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
-          alt="Netflix"
-          className="navbar-logo"
-          onClick={handleLogoClick}
-          tabIndex={0}
-          onKeyDown={(e) => e.key === "Enter" && handleLogoClick()}
-        />
+        <Link to="/home">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+            alt="Netflix"
+            className="navbar-logo"
+          />
+        </Link>
         <ul className="primary-navigation">
           <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("home")}>Home</a></li>
           <li><a href="#" className="nav-link" onClick={() => onSectionClick && onSectionClick("tvshows")}>TV Shows</a></li>
